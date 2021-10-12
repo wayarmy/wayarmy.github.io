@@ -15,8 +15,8 @@ author: Wayarmy
 
 navbar-links:
   About Me: "aboutme"
-  Resources:
-    - Head of System Platform: "https://onemount.com"
+  # Resources:
+  #   - Head of System Platform: "https://onemount.com"
   Author's home: "https://wayarmy.github.io"
 
 # --- Logo --- #
@@ -44,7 +44,7 @@ social-network-links:
   twitter: wayarmy
 #  medium: yourname
 #  reddit: yourname
-  linkedin: quan-phuong
+  linkedin: quanphuong
 #  xing: yourname
 #  stackoverflow: "3943160/daattali"
 #  snapchat: deanat78
