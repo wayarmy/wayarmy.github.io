@@ -41,7 +41,7 @@ Tiện tay search google ra một [link hướng dẫn](https://openplanning.net
 Trong quá trình làm việc thực tế với Ubuntu hoặc các hệ điều hành Linux khác, kể cả khi mình làm việc với MacOSX, thời gian sử dụng terminal để làm việc cũng chiếm khoảng 50% thời gian mình ngồi làm việc trên máy tính. Nên việc đầu tiên khi bắt đầu với Linux theo mình là tập làm quen với giao diện terminal của các hệ điều hành Linux.
 
 Trên Ubuntu thì Terminal sẽ có giao diện kiểu thế này:
-![Ubuntu Terminal](/assets/images/1-25.png)
+![Ubuntu Terminal](/assets/img/1-25.png)
 
 Sau khi cài đặt xong Ubuntu, bạn có thể bật thử terminal có sẵn trên thanh task bar của Ubuntu hoặc tìm kiếm `terminal` trong thanh công cụ `search` của Ubuntu.
 
