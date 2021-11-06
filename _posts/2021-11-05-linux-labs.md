@@ -6,16 +6,14 @@ gh-repo: wayarmy/wayarmy.github.io
 gh-badge: [star, fork, follow]
 tags: [sysadmin]
 comments: true
-date:   2021-10-10
+date:   2021-11-05
 categories: Sysadmin
 ---
 
 **Những bài labs liên quan tới Linux**
 
 > Danh sách các bài labs mà mình nghĩ cần thiết cho 1 bạn newbie về Linux
-
 > Nội dung sẽ đi từ Fundamentals => Basic => Advanced
-
 > Vì hướng dẫn có rất nhiều trên google, nên sẽ không có hướng dẫn làm ở đây
 
 ## 1. Thao tác với files, thư mục
