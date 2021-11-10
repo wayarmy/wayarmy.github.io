@@ -125,4 +125,41 @@ systemctl status httpd
 
 - Thực hiện cấu hình `apache httpd` sao cho khi truy cập vào địa chỉ `<server_IP>:8080` thì sẽ hiển thị ra với HTML tương ứng.
 
+### 6.3 Cài đặt SSH server
+
+Thường thì các máy chủ cài đặt các hệ điều hành Linux hiện tại đều có cài đặt sẵn Open SSH server rồi, nên thường khi làm bài labs, nên chú trọng vào một vài vấn đề sau:
+
+- Cài đặt và update openSSH server đối với các máy chưa cài đặt hoặc đã cài rồi cần update.
+- Generate SSH RSA private/public key. 
+- Cấu hình đăng nhập vào server linux với SSH RSA key, không sử dụng password.
+- Đọc, hiểu các cấu hình của openSSH server trong `/etc/ssh/sshd_config`
+- Login vào remote linux server sử dụng `ssh forward agent`
+- Đọc, hiểu và tự cấu hình ssh client được định nghĩa trong `~/.ssh/config` trên máy tính cá nhân.
+
+### 6.4 Cài đặt FTP server
+
+Một số yêu cầu cụ thể trong bài lab này:
+
+- Cài đặt một phần mềm FTP server bất kỳ (ví dụ: Filezilla server, vsftpd, proftpd)
+- Cài đặt FTP client trên máy tính cá nhân và có thể connect được tới FTP server, download file từ server và upload 1 file bất kỳ từ máy tính cá nhân lên server thông qua FTP.
+
+
+### 6.5 Cấu hình NTP trên server
+
+Thông thường 1 máy chủ linux bất kỳ (hoặc kể cả máy tính cá nhân cài đặt linux) sẽ luôn được cài đặt sẵn `ntpd`. `ntpd` được sử dụng để đồng bộ thời gian của máy linux đó theo time zone hoặc theo 1 server `NTP` bất kỳ (được cung cấp bởi ICANN - tổ chức quản lý internet thế giới, hoặc được cung cấp bởi một tổ chức nào đó - có thể đó chính là công ty mình đang làm việc).
+
+Đối với `ntpd` client được cài đặt trên linux, thường có một số yêu cầu như sau:
+
+- Cài đặt `ntpd` đồng bộ với máy chủ `NTP` của asia
+- Cài đặt `ntpd` đồng bộ theo time zone `Asia/Ho_Chi_Minh`
+- Show ra `date` để kiểm tra xem máy linux đó đã được cập nhật đúng thời gian và timezone hay chưa.
+
+
+### 6.6 Cài đặt và cấu hình máy chủ DNS
+
+Máy chủ DNS được sử dụng để giúp các máy trạm hoặc chính máy tính cá nhân của mình phân giải các tên miền về địa chỉ IP của máy chủ đang host cái web/system đó. Thông thường một bài lab cài đặt máy chủ DNS thì DNS server thường sẽ được chọn là `Bind 9`. Bài lab sẽ có một số yêu cầu sau:
+
+- Cài đặt thành công `Bind 9` lên một server linux
+- Cấu hình zone và record 1 domain bất kỳ trên máy chủ DNS đó, sửa địa chỉ DNS ở máy cá nhân đang sử dụng về địa chỉ máy chủ DNS được cài đặt `Bind 9` kia, sử dụng lệnh `ping`, `lookup`, `dig` để kiểm tra domain kia đã được trỏ về chính xác địa chỉ IP mà được lưu trong máy chủ DNS kia chưa.
+
 > (to be continued)
