@@ -15,6 +15,7 @@ categories: Sysadmin
 > Danh sách các bài labs mà mình nghĩ cần thiết cho 1 bạn newbie về Linux
 > Nội dung sẽ đi từ Fundamentals => Basic => Advanced
 > Vì hướng dẫn có rất nhiều trên google, nên sẽ không có hướng dẫn làm ở đây
+
 ## 1. Thao tác với user/group trên linux
 
 Khởi tạo một user trên Ubuntu:
