@@ -7,7 +7,6 @@
 
 # Name of website
 title: Quan Phuong's Blog
-resob
 # Your name to show in the footer
 author: Wayarmy
 
@@ -62,7 +61,7 @@ social-network-links:
 
 # If you want your website to generate an RSS feed, provide a description
 # The URL for the feed will be https://<your_website>/feed.xml
-rss-description: Quan Phuong's blog
+rss-description: This is Quan Phuong's blog
 
 # --- General options --- #
 
