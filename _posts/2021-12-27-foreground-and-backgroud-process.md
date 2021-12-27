@@ -5,7 +5,7 @@ subtitle: Linux process
 gh-repo: wayarmy/wayarmy.github.io
 tags: [sysadmin]
 comments: true
-date:   2021-10-10
+date:   2021-12-27
 categories: Sysadmin
 ---
 
