@@ -525,4 +525,4 @@ Vẽ trên giấy A4:
 
 ---
 
-*Bài tiếp theo: [Networking Fundamentals - Phần 2: IP Addressing & Subnetting](/2026-06-02-ip-addressing-subnetting/) — Hiểu cách đánh "địa chỉ" cho máy tính trên mạng*
+*Bài tiếp theo: [Networking Fundamentals - Phần 2: IP Addressing & Subnetting](/2026-06-01-ip-addressing-subnetting/) — Hiểu cách đánh "địa chỉ" cho máy tính trên mạng*

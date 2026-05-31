@@ -5,7 +5,7 @@ subtitle: "Hiểu cách đánh 'địa chỉ' cho máy tính trên mạng — t�
 gh-repo: wayarmy/wayarmy.github.io
 tags: [networking, aws, learning-path]
 comments: true
-date: 2026-06-02
+date: 2026-06-01
 categories: AWS-Learning-Path
 ---
 
@@ -420,4 +420,4 @@ Ghi ra: CIDR cho mỗi subnet, số IP usable, và lý do chọn size đó.
 
 ---
 
-*Bài tiếp theo: [Networking Fundamentals - Phần 3: Routing & How Packets Travel](/2026-06-03-routing-packets/) — Hiểu cách dữ liệu tìm đường đi từ máy bạn đến server*
+*Bài tiếp theo: [Networking Fundamentals - Phần 3: Routing & How Packets Travel](/2026-06-01-routing-how-packets-travel/) — Hiểu cách dữ liệu tìm đường đi từ máy bạn đến server*

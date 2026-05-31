@@ -5,7 +5,7 @@ subtitle: "Hiểu cách trình duyệt tìm ra địa chỉ IP khi bạn gõ goo
 gh-repo: wayarmy/wayarmy.github.io
 tags: [networking, aws, learning-path]
 comments: true
-date: 2026-06-04
+date: 2026-06-01
 categories: AWS-Learning-Path
 ---
 
@@ -590,4 +590,4 @@ sudo systemd-resolve --flush-caches
 
 ---
 
-**Bài tiếp theo:** [Phần 5: HTTP, TCP/UDP và Ports — Giao thức giao tiếp trên Internet](/2026-06-05-http-tcp-udp-ports/)
+**Bài tiếp theo:** [Phần 5: HTTP, TCP/UDP và Ports — Giao thức giao tiếp trên Internet](/2026-06-01-http-tcp-udp-ports/)

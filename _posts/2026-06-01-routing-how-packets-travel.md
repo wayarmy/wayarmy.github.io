@@ -5,7 +5,7 @@ subtitle: "Hiểu cách packets đi từ máy bạn đến server ở bên kia t
 gh-repo: wayarmy/wayarmy.github.io
 tags: [networking, aws, learning-path]
 comments: true
-date: 2026-06-03
+date: 2026-06-01
 categories: AWS-Learning-Path
 ---
 
@@ -416,4 +416,4 @@ Viết Route Table cho:
 
 ---
 
-*Bài tiếp theo: [Networking Fundamentals - Phần 4: DNS — Hệ thống phân giải tên miền](/2026-06-04-dns-domain-name-system/) — Hiểu cách "google.com" biến thành IP address*
+*Bài tiếp theo: [Networking Fundamentals - Phần 4: DNS — Hệ thống phân giải tên miền](/2026-06-01-dns-domain-name-system/) — Hiểu cách "google.com" biến thành IP address*
