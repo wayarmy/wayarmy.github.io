@@ -92,6 +92,7 @@ Truyền **các bit thô (0 và 1)** từ máy này sang máy khác qua môi tr�
 - Layer 1 quy định: tốc độ truyền bao nhiêu bit/giây (ví dụ: 1 Gbps), dùng loại cáp nào, đầu cắm hình gì
 
 #### Các "con đường" phổ biến:
+
 | Loại | Ví dụ | Tốc độ | Khoảng cách |
 |------|-------|--------|-------------|
 | **Cáp đồng (Copper)** | Dây mạng RJ-45 (dây xanh cắm vào máy tính) | 1-10 Gbps | ~100m |
@@ -143,6 +144,7 @@ Dữ liệu ở Layer 2 được đóng gói thành **frame** — giống như m
 - Switch lưu một **bảng MAC address** — giống danh bạ: "MAC này nằm ở cổng nào"
 
 #### Khác biệt Hub vs Switch:
+
 | | Hub (Layer 1) | Switch (Layer 2) |
 |---|---|---|
 | Nhận frame | Phát cho TẤT CẢ cổng | Chỉ gửi đến cổng đích |
@@ -212,6 +214,7 @@ Máy bạn → Router nhà → Router ISP → ... → Router ISP đích → Serv
 - **Router:** "Bưu điện trung chuyển" — kết nối nhiều mạng khác nhau, quyết định đường đi
 
 #### Trong AWS:
+
 | Concept | Ý nghĩa |
 |---------|---------|
 | **VPC (Virtual Private Cloud)** | Mạng riêng ảo — giống khu đô thị có rào riêng |
@@ -236,6 +239,7 @@ Máy bạn → Router nhà → Router ISP → ... → Router ISP đích → Serv
 Đảm bảo dữ liệu được truyền **end-to-end** giữa hai ứng dụng cụ thể trên hai máy khác nhau, sử dụng **port numbers** (0-65535).
 
 #### Port Numbers phổ biến:
+
 | Port | Dịch vụ | Ví dụ thực tế |
 |------|---------|---------------|
 | 22 | SSH | Remote login vào server |
@@ -289,6 +293,7 @@ Client → Server:  ACK, Seq=101, Ack=301
 ```
 
 #### Trong AWS:
+
 | Service | Layer 4 liên quan |
 |---------|-------------------|
 | **NLB (Network Load Balancer)** | Cân bằng tải ở Layer 4 — chỉ xem IP + Port, không đọc nội dung |
@@ -347,6 +352,7 @@ Trong mô hình TCP/IP (thực tế), Layer 5 thường được **gộp vào La
 Cung cấp **giao diện mạng** cho các ứng dụng người dùng. Đây là lớp duy nhất mà end-user tương tác trực tiếp.
 
 #### Giao thức phổ biến:
+
 | Giao thức | Port | Dùng cho | Ví dụ |
 |-----------|------|----------|-------|
 | **HTTP/HTTPS** | 80/443 | Web | Mở google.com, đọc tin tức |
@@ -357,6 +363,7 @@ Cung cấp **giao diện mạng** cho các ứng dụng người dùng. Đây l�
 | **SSH** | 22 | Remote access | Đăng nhập server từ xa |
 
 #### Trong AWS:
+
 | Service | Chức năng ở Layer 7 |
 |---------|---------------------|
 | **ALB (Application Load Balancer)** | Đọc nội dung HTTP — route theo URL path, hostname |
