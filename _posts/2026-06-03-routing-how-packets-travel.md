@@ -248,6 +248,7 @@ ip route add 10.0.2.0/24 via 10.0.1.1
 - Phù hợp: mạng lớn, phức tạp
 
 **Giao thức phổ biến:**
+
 | Protocol | Loại | Dùng cho |
 |----------|------|----------|
 | **OSPF** | Link-state | Mạng nội bộ lớn |
