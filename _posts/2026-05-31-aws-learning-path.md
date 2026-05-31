@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "AWS Learnign Path"
+title:  "AWS Learning Path"
 subtitle: AWS Learning Path - Mapping with IT Foundation
 gh-repo: wayarmy/wayarmy.github.io
 tags: [sysadmin, developer, devops, cloud]
@@ -9,11 +9,17 @@ date:   2026-05-31
 categories: Sysadmin
 ---
 
-**AWS Learning Path - Mapping with IT Foundation**
+> 💡 **Có thể học song song:** Các phần trong Phase 0 (Networking, Linux, Containers, Security) **không bắt buộc phải học tuần tự từ đầu tới cuối**. Bạn hoàn toàn có thể học song song — ví dụ sáng học Networking, chiều học Linux. Thứ tự trong tài liệu này chỉ là gợi ý ưu tiên, nhưng vì mỗi hệ thống kiến thức tương đối độc lập ở giai đoạn đầu, bạn có thể mix & match tùy theo sở thích và năng lượng mỗi ngày. **Ngoại lệ duy nhất:** Security nên để cuối cùng vì cần hiểu Networking + Linux trước.
 
-# 📘 IT FOUNDATION CHI TIẾT + TIMELINE TUẦN CỤ THỂ
-
-> Phụ lục cho Lộ trình AWS — Deep dive từng topic + Lịch học ngày/tuần**Dành cho:** Người mới, đã có kiến thức coding cơ bản (biết lập trình, functions, logic)**Giả định:** Học 2-3 giờ/ngày, 5-6 ngày/tuần**Triết lý:** Mỗi concept cần thời gian "ngấm" — không nhồi nhét, ưu tiên hiểu sâu hơn học nhanh
+> Phụ lục cho Lộ trình AWS — Deep dive từng topic + Lịch học ngày/tuần
+>
+> **Dành cho:** Người mới, đã có kiến thức coding cơ bản (biết lập trình, functions, logic)
+>
+> **Giả định:** Học 2-3 giờ/ngày, 5-6 ngày/tuần
+>
+> **Triết lý:** Mỗi concept cần thời gian "ngấm" — không nhồi nhét, ưu tiên hiểu sâu hơn học nhanh
+>
+> **🧪 Labs chính:** [Cloud Journey - AWS Study Group](https://cloudjourney.awsstudygroup.com/) — Tiếng Việt, step-by-step, có hình ảnh
 
 ---
 
@@ -26,7 +32,9 @@ categories: Sysadmin
 
 # 🏗️ PHẦN 1: IT FOUNDATION DEEP DIVE
 
-> ⚠️ **Lưu ý cho người có background coding:**Bạn đã có tư duy logic, biết viết code — đó là lợi thế lớn. Tuy nhiên, Networking và Linux là hai thế giới hoàn toàn khác so với application programming. Đừng nóng vội — những concept như subnetting, BGP, hay systemd cần thời gian thực hành lặp đi lặp lại mới "ngấm" được.
+> ⚠️ **Lưu ý cho người có background coding:**
+>
+> Bạn đã có tư duy logic, biết viết code — đó là lợi thế lớn. Tuy nhiên, Networking và Linux là hai thế giới hoàn toàn khác so với application programming. Đừng nóng vội — những concept như subnetting, BGP, hay systemd cần thời gian thực hành lặp đi lặp lại mới "ngấm" được.
 
 ## Thứ tự học (đã điều chỉnh):
 
@@ -160,7 +168,7 @@ categories: Sysadmin
 | --- | --- | --- | --- |
 | **T2** | Setup + Navigation | Install Ubuntu (VM/WSL2/Docker). Terminal basics. `pwd`, `ls -la`, `cd`, `mkdir`, `rmdir`, `touch`. Absolute vs relative paths. Hidden files (`.`) | Tạo project directory structure bằng CLI |
 | **T3** | File Operations | `cp`, `mv`, `rm -rf`, `cat`, `less`, `head`, `tail -f`, `wc`. Wildcards: `*`, `?`, `[]`. Hard links vs Soft links | Chain 5+ commands cùng lúc |
-| **T4** | I/O Redirection & Pipes | `>` (overwrite), `>>` (append), `<` (input), `2>` (stderr), `&>` (all). Pipes ` | `. `tee`. `xargs`. **Developer analogy:** Pipes = chaining functions |
+| **T4** | I/O Redirection & Pipes | `>` (overwrite), `>>` (append), `<` (input), `2>` (stderr), `&>` (all). Pipes `\|`. `tee`. `xargs`. **Developer analogy:** Pipes = chaining functions | Chain commands with pipes |
 | **T5** | Permissions | `rwx` = read/write/execute. User/Group/Others. Numeric: 755, 644, 600. `chmod`, `chown`. `umask`. Why this matters: EC2 key file needs 600! | Fix "Permission denied" scenarios (5 exercises) |
 | **CN** | Users, Groups & sudo | `/etc/passwd`, `/etc/shadow`. `useradd`, `usermod`. Groups. `sudo` vs `su`. **AWS analogy:** Linux users:groups ≈ IAM users:groups | Create 3 users, 2 groups, assign permissions |
 
@@ -202,28 +210,30 @@ categories: Sysadmin
 ## 🟤 TUẦN 9-10: VIRTUALIZATION, CONTAINERS & DATABASE
 
 > 💡 Phần này gần với thế giới developer — Docker, containers, DB sẽ quen thuộc hơn.
+>
+> 🧪 **Bắt đầu có labs Cloud Journey ở đây:**
 
 ### Tuần 9: Virtualization & Containers
 
-| Ngày | Chủ đề | Nội dung chi tiết | Thực hành |
+| Ngày | Chủ đề | Nội dung chi tiết | 🧪 Thực hành chính |
 | --- | --- | --- | --- |
-| **T2** | Virtualization concepts | Hypervisor Type 1 (bare metal: Xen, KVM, Nitro) vs Type 2 (VirtualBox, VMware). VM = full OS copy. vCPU, vRAM, virtual disk. Snapshots. **AWS:** EC2 = VM on Nitro hypervisor | Tạo VM trong VirtualBox (nếu chưa có), take snapshot, restore |
-| **T3** | Docker (phần 1) | Container ≠ VM (shares kernel, lighter). Docker architecture: daemon, client, registry. Image (blueprint) vs Container (running instance). `docker run`, `docker ps`, `docker stop` | `docker run -d -p 80:80 nginx` → truy cập localhost:80 |
-| **T4** | Docker (phần 2) | Dockerfile: `FROM`, `RUN`, `COPY`, `CMD`, `EXPOSE`, `ENV`, `WORKDIR`. Layer caching. `.dockerignore`. Build context. **AWS:** ECR = Docker Hub của AWS | Build Docker image cho 1 Python/Node app của bạn |
-| **T5** | Docker Compose & Multi-container | `docker-compose.yml`: services, networks, volumes. Multi-container apps (app + db + cache). **AWS:** ECS Task Definition ≈ docker-compose | docker-compose: app (Flask/Express) + PostgreSQL + Redis |
-| **CN** | Container Orchestration (overview) | Tại sao cần orchestration? (scaling, health check, load balance containers). K8s concepts: Pod, Service, Deployment. **AWS:** ECS vs EKS vs Fargate | Đọc + diagram: ECS cluster → Services → Tasks → Containers |
+| **T2** | Virtualization concepts | Hypervisor Type 1 (bare metal: Xen, KVM, Nitro) vs Type 2 (VirtualBox, VMware). VM = full OS copy. Snapshots. **AWS:** EC2 = VM on Nitro | Tạo VM trong VirtualBox, take snapshot, restore |
+| **T3** | Docker (phần 1) | Container ≠ VM (shares kernel, lighter). Docker architecture: daemon, client, registry. Image vs Container. `docker run`, `docker ps`, `docker stop` | 🧪 [Containerization with Docker](https://000015.awsstudygroup.com/) |
+| **T4** | Docker (phần 2) | Dockerfile: `FROM`, `RUN`, `COPY`, `CMD`, `EXPOSE`, `ENV`, `WORKDIR`. Layer caching. `.dockerignore`. **AWS:** ECR = Docker Hub của AWS | 🧪 Tiếp tục lab Docker → build image cho app của bạn |
+| **T5** | Docker Compose & Multi-container | `docker-compose.yml`: services, networks, volumes. Multi-container apps (app + db + cache). **AWS:** ECS Task Definition ≈ docker-compose | 🧪 [Container Orchestration with Amazon ECS](https://000016.awsstudygroup.com/) |
+| **CN** | Container Orchestration (overview) | Tại sao cần orchestration? K8s concepts: Pod, Service, Deployment. **AWS:** ECS vs EKS vs Fargate | 🧪 [Container Deployment with Lightsail Containers](https://000046.awsstudygroup.com/) |
 
 ---
 
 ### Tuần 10: Database Concepts & Data
 
-| Ngày | Chủ đề | Nội dung chi tiết | Thực hành |
+| Ngày | Chủ đề | Nội dung chi tiết | 🧪 Thực hành chính |
 | --- | --- | --- | --- |
-| **T2** | Relational DB deep | ACID (Atomicity, Consistency, Isolation, Durability). Normalization (1NF, 2NF, 3NF). Indexes (B-tree). Transactions. **AWS:** RDS, Aurora | Design schema cho e-commerce (users, orders, products) |
-| **T3** | SQL review & advanced | Joins (INNER, LEFT, RIGHT, FULL). Subqueries. Window functions (`ROW_NUMBER`, `RANK`). `GROUP BY` + `HAVING`. Performance: `EXPLAIN` | Write 10 queries on sample DB (SQLite hoặc PostgreSQL) |
-| **T4** | NoSQL concepts | Key-Value (Redis, DynamoDB). Document (MongoDB). Column-family (Cassandra). Graph (Neo4j, Neptune). When to use which? CAP theorem | Design DynamoDB table: partition key, sort key, GSI |
-| **T5** | Data Architecture overview | OLTP vs OLAP. Data Lake vs Data Warehouse. ETL/ELT. Streaming vs Batch. **AWS:** RDS(OLTP) → Glue(ETL) → Redshift(OLAP) or S3(Lake) | Diagram: Full data pipeline từ source → lake → warehouse |
-| **CN** | IaC concepts | Infrastructure as Code: Declarative (what) vs Imperative (how). **AWS:** CloudFormation (YAML/JSON), CDK (Python/TS), Terraform (HCL). Version control infra | Đọc 1 CloudFormation template, understand structure |
+| **T2** | Relational DB deep | ACID. Normalization (1NF, 2NF, 3NF). Indexes (B-tree). Transactions. **AWS:** RDS, Aurora | Design schema cho e-commerce (users, orders, products) |
+| **T3** | SQL review & advanced | Joins (INNER, LEFT, RIGHT, FULL). Subqueries. Window functions. `GROUP BY` + `HAVING`. `EXPLAIN` | Write 10 queries on sample DB (SQLite/PostgreSQL) |
+| **T4** | NoSQL concepts | Key-Value (Redis, DynamoDB). Document (MongoDB). When to use which? CAP theorem | Design DynamoDB table: partition key, sort key, GSI |
+| **T5** | Data Architecture overview | OLTP vs OLAP. Data Lake vs Data Warehouse. ETL/ELT. **AWS:** RDS → Glue → Redshift/S3 | Diagram: Full data pipeline source → lake → warehouse |
+| **CN** | IaC concepts | Infrastructure as Code: Declarative vs Imperative. **AWS:** CloudFormation, CDK, Terraform | Đọc 1 CloudFormation template, understand structure |
 
 📝 Checkpoint Tuần 10:
 
@@ -236,21 +246,17 @@ categories: Sysadmin
 
 ## 🔴 TUẦN 11-12: SECURITY FUNDAMENTALS (Để cuối — cần networking + Linux trước)
 
-> 💡 **Tại sao cuối?** Bây giờ bạn đã hiểu:
-> - TCP/IP, Ports, HTTP → hiểu TLS/firewall rules
-> - Linux permissions → hiểu IAM permission model
-> - Networking flow → hiểu defense in depth
-> - Containers → hiểu container security
+> 💡 **Tại sao cuối?** Bây giờ bạn đã hiểu TCP/IP, Ports, HTTP → hiểu TLS/firewall rules; Linux permissions → hiểu IAM.
 
 ### Tuần 11: Encryption, TLS, PKI
 
 | Ngày | Chủ đề | Nội dung chi tiết | Thực hành |
 | --- | --- | --- | --- |
-| **T2** | Encryption Basics | Symmetric (AES-256): 1 key, fast, dùng cho data at rest. Asymmetric (RSA): 2 keys (public encrypt, private decrypt), slow, dùng cho key exchange. **AWS:** KMS = managed symmetric keys | `openssl enc -aes-256-cbc` encrypt/decrypt file |
-| **T3** | TLS/SSL | **Bạn đã hiểu TCP** — giờ thêm layer bảo mật. TLS Handshake: ClientHello → ServerHello → Certificate → Key Exchange → Encrypted data. Tại sao HTTPS cần certificate? | `openssl s_client -connect google.com:443` — đọc cert chain |
-| **T4** | PKI & Certificates | Certificate Authority (CA) hierarchy: Root → Intermediate → Leaf. CSR process. Certificate = public key + identity + CA signature. **AWS:** ACM tự động manage certs | Tạo self-signed cert với openssl, hiểu từng field |
-| **T5** | Hashing & Digital Signatures | Hash: SHA-256 (one-way, deterministic). Dùng cho: integrity check, password storage (+salt). Digital signature = hash encrypted with private key. Verify = decrypt with public key | Hash file, modify 1 byte, hash lại — thấy avalanche effect |
-| **CN** | Encryption in AWS | KMS (symmetric, key policies). Envelope encryption (data key + master key). Server-Side Encryption (SSE-S3, SSE-KMS, SSE-C). Client-Side. **Bạn đã hiểu S3** → giờ thêm encryption layer | Map encryption types cho S3, EBS, RDS |
+| **T2** | Encryption Basics | Symmetric (AES-256): 1 key, fast, data at rest. Asymmetric (RSA): 2 keys, slow, key exchange. **AWS:** KMS = managed symmetric keys | `openssl enc -aes-256-cbc` encrypt/decrypt file |
+| **T3** | TLS/SSL | TLS Handshake: ClientHello → ServerHello → Certificate → Key Exchange → Encrypted. Tại sao HTTPS cần certificate? | `openssl s_client -connect google.com:443` — đọc cert chain |
+| **T4** | PKI & Certificates | CA hierarchy: Root → Intermediate → Leaf. CSR process. Certificate = public key + identity + CA signature. **AWS:** ACM manages certs | Tạo self-signed cert với openssl, hiểu từng field |
+| **T5** | Hashing & Digital Signatures | Hash: SHA-256 (one-way, deterministic). Digital signature = hash encrypted with private key. | Hash file, modify 1 byte, hash lại — thấy avalanche effect |
+| **CN** | Encryption in AWS | KMS, Envelope encryption. SSE-S3, SSE-KMS, SSE-C. Client-Side encryption. | Map encryption types cho S3, EBS, RDS |
 
 ---
 
@@ -258,16 +264,16 @@ categories: Sysadmin
 
 | Ngày | Chủ đề | Nội dung chi tiết | Thực hành |
 | --- | --- | --- | --- |
-| **T2** | Authentication | Factors: Knowledge (password), Possession (phone/token), Inherence (biometric). MFA. Password hashing (bcrypt, argon2). Session vs Token-based auth | Decode a JWT: header.payload.signature — hiểu mỗi phần |
-| **T3** | Authorization & Access Control | RBAC (Role-Based), ABAC (Attribute-Based). Policy evaluation logic. **AWS:** IAM = RBAC + ABAC. Policy JSON: Effect + Action + Resource + Condition | Viết 3 IAM policies: admin, readonly, specific-service |
-| **T4** | Identity Federation | OAuth 2.0 (authorization). OIDC (authentication on top of OAuth). SAML 2.0 (enterprise SSO). **AWS:** Cognito (consumer), IAM Identity Center (enterprise) | Diagram: OAuth 2.0 flow cho "Login with Google" |
-| **T5** | Security Architecture | Shared Responsibility Model. Defense in Depth: Edge (WAF, Shield) → Network (SG, NACL) → Host (OS hardening) → App (auth) → Data (encryption). Least privilege. Zero trust | Map all security layers cho 3-tier AWS app |
-| **CN** | 🏆 SECURITY & IT FOUNDATION CAPSTONE | **Final Project:** Complete security design cho web app: IAM roles + VPC security + encryption at rest/transit + WAF + monitoring. **Final quiz: 50 câu all topics** | Document + quiz score |
+| **T2** | Authentication | Factors: Knowledge, Possession, Inherence. MFA. Password hashing (bcrypt). Session vs Token auth | Decode a JWT: header.payload.signature |
+| **T3** | Authorization & Access Control | RBAC, ABAC. Policy evaluation logic. **AWS:** IAM = RBAC + ABAC. Policy JSON | Viết 3 IAM policies: admin, readonly, specific-service |
+| **T4** | Identity Federation | OAuth 2.0 (authorization). OIDC (auth). SAML 2.0 (enterprise SSO). **AWS:** Cognito, IAM Identity Center | Diagram: OAuth 2.0 flow cho "Login with Google" |
+| **T5** | Security Architecture | Shared Responsibility Model. Defense in Depth: Edge → Network → Host → App → Data. Least privilege. Zero trust | Map all security layers cho 3-tier AWS app |
+| **CN** | 🏆 SECURITY & IT FOUNDATION CAPSTONE | Complete security design + **Final quiz: 50 câu all topics** | Document + quiz score |
 
 📝 Checkpoint Tuần 12 (IT FOUNDATION COMPLETE):
 
 - [ ] Explain encryption types and when to use each
-- [ ] Understand TLS handshake (vì đã hiểu TCP)
+- [ ] Understand TLS handshake
 - [ ] Write IAM policies
 - [ ] Design defense-in-depth architecture
 - [ ] **READY FOR AWS CLOUD PRACTITIONER** 🎉
@@ -276,85 +282,139 @@ categories: Sysadmin
 
 # 📅 PHẦN 2: WEEKLY TIMELINE CHI TIẾT
 
-> **Assumptions:** 2-3h/ngày, 5-6 ngày/tuần, bắt đầu từ tháng 6/2026**Tổng thời gian:** ~20-22 tháng (realistic cho người vừa học vừa làm)
+> **Assumptions:** 2-3h/ngày, 5-6 ngày/tuần, bắt đầu từ tháng 6/2026
+>
+> **Tổng thời gian:** ~20-22 tháng
+>
+> **🧪 Từ Phase 1 trở đi:** Mỗi tuần có **Lab chính từ [Cloud Journey](https://cloudjourney.awsstudygroup.com/)** — đây là bài thực hành BẮT BUỘC. Cột "Add-on" là bài tập tùy chọn thêm.
 
 ## 🗓️ PHASE 0: IT FOUNDATION (Tuần 1-12) — 3 tháng
 
-| Tuần | Dates (ước tính) | Focus | Deliverable |
-| --- | --- | --- | --- |
-| W1 | 01-07/06/2026 | Networking: OSI, TCP/IP, Wireshark | OSI diagram + first packet capture |
-| W2 | 08-14/06/2026 | Networking: IP Addressing, CIDR, Subnetting | Subnet calculations confident |
-| W3 | 15-21/06/2026 | Networking: Subnetting advanced, Routing | VPC CIDR design document |
-| W4 | 22-28/06/2026 | Networking: DNS, HTTP, TCP/UDP, NAT | DNS trace + NAT diagram |
-| W5 | 29/06-05/07/2026 | Networking: Firewalls, VPN, LB, BGP | Full network architecture diagram |
-| W6 | 06-12/07/2026 | Linux: CLI, files, permissions, users | Confident CLI navigation |
-| W7 | 13-19/07/2026 | Linux: Packages, services, networking CLI | Troubleshooting checklist |
-| W8 | 20-26/07/2026 | Linux: Bash scripting, automation | EC2 User Data script |
-| W9 | 27/07-02/08/2026 | Containers: Docker, Docker Compose | Dockerized app running |
-| W10 | 03-09/08/2026 | Databases, Data Architecture, IaC concepts | DB schema + pipeline diagram |
-| W11 | 10-16/08/2026 | Security: Encryption, TLS, PKI | Encryption mapping document |
-| W12 | 17-23/08/2026 | Security: Auth, IAM, Security Architecture | **IT Foundation COMPLETE** ✅ |
+| Tuần | Focus | Deliverable |
+| --- | --- | --- |
+| W1 | Networking: OSI, TCP/IP, Wireshark | OSI diagram + first packet capture |
+| W2 | Networking: IP Addressing, CIDR, Subnetting | Subnet calculations confident |
+| W3 | Networking: Subnetting advanced, Routing | VPC CIDR design document |
+| W4 | Networking: DNS, HTTP, TCP/UDP, NAT | DNS trace + NAT diagram |
+| W5 | Networking: Firewalls, VPN, LB, BGP | Full network architecture diagram |
+| W6 | Linux: CLI, files, permissions, users | Confident CLI navigation |
+| W7 | Linux: Packages, services, networking CLI | Troubleshooting checklist |
+| W8 | Linux: Bash scripting, automation | EC2 User Data script |
+| W9 | Containers: Docker, Docker Compose | 🧪 [Docker](https://000015.awsstudygroup.com/) + [ECS](https://000016.awsstudygroup.com/) + [Lightsail Containers](https://000046.awsstudygroup.com/) |
+| W10 | Databases, Data Architecture, IaC concepts | DB schema + pipeline diagram |
+| W11 | Security: Encryption, TLS, PKI | Encryption mapping document |
+| W12 | Security: Auth, IAM, Security Architecture | **IT Foundation COMPLETE** ✅ |
 
 ---
 
-## 🗓️ PHASE 1: CLOUD PRACTITIONER (Tuần 13-17) — 5 tuần (thêm 1 tuần buffer)
+## 🗓️ PHASE 1: CLOUD PRACTITIONER (Tuần 13-17) — 5 tuần
 
-| Tuần | Focus | Hoạt động | Resources |
+> 🧪 **Bắt đầu từ đây, mỗi tuần có LAB CHÍNH từ [Cloud Journey](https://cloudjourney.awsstudygroup.com/)** — đây là bài thực hành bắt buộc, có hướng dẫn step-by-step tiếng Việt.
+
+| Tuần | Focus | 🧪 Lab chính (Cloud Journey) | Add-on |
 | --- | --- | --- | --- |
-| W13 | Cloud Concepts | Cloud models (IaaS/PaaS/SaaS), AWS Global Infrastructure, Well-Architected | AWS Skill Builder (free) |
-| W14 | Core Services (Compute & Storage) | EC2, Lambda, S3, EBS — concepts + console exploration | AWS Free Tier hands-on |
-| W15 | Core Services (DB, Network, Security) | RDS, VPC, IAM, CloudWatch — connect to Foundation knowledge | Skill Builder modules |
-| W16 | Pricing, Support, Review | Pricing models, Support plans, Billing tools, AWS Organizations | Whitepaper: AWS Overview |
-| W17 | **EXAM PREP** | 3 practice exams (65Q each). Review wrong answers. Book exam | **🎯 THI CLF-C02** |
+| W13 | Cloud Concepts & Account Setup | [Creating Your First AWS Account](https://000001.awsstudygroup.com/) | AWS Skill Builder: Cloud Concepts |
+| W13 |  | [Managing Costs with AWS Budgets](https://000007.awsstudygroup.com/) |  |
+| W13 |  | [Getting Help with AWS Support](https://000009.awsstudygroup.com/) |  |
+| W14 | IAM & Compute | [Access Management with IAM](https://000002.awsstudygroup.com/) | Explore IAM console |
+| W14 |  | [Compute Essentials with EC2](https://000004.awsstudygroup.com/) |  |
+| W14 |  | [Instance Profiling with IAM Roles for EC2](https://000048.awsstudygroup.com/) |  |
+| W15 | Network, Storage & DB | [Networking Essentials with VPC](https://000003.awsstudygroup.com/) | Vẽ lại VPC diagram |
+| W15 |  | [Static Website Hosting with S3](https://000057.awsstudygroup.com/) |  |
+| W15 |  | [Database Essentials with RDS](https://000005.awsstudygroup.com/) |  |
+| W16 | Monitoring, DNS & CLI | [Monitoring with CloudWatch](https://000008.awsstudygroup.com/) | AWS Whitepaper: Overview |
+| W16 |  | [Hybrid DNS Management with Route 53](https://000010.awsstudygroup.com/) |  |
+| W16 |  | [Command Line Operations with AWS CLI](https://000011.awsstudygroup.com/) |  |
+| W17 | **EXAM PREP** | [Building Highly Available Web Applications](https://000101.awsstudygroup.com/) ← capstone lab | 3 practice exams (65Q). **🎯 THI CLF-C02** |
 
 ---
 
 ## 🗓️ PHASE 2A: SOLUTIONS ARCHITECT ASSOCIATE (Tuần 18-31) — 14 tuần
 
-| Tuần | Focus | Hoạt động |
-| --- | --- | --- |
-| W18 | IAM Deep | Users, Groups, Roles, Policies (JSON). MFA. STS. Cross-account. Permission boundaries |
-| W19 | EC2 Deep | Instance families, Nitro, placement groups, ENI, User Data. Instance Store vs EBS |
-| W20 | Storage: EBS, EFS, FSx | Volume types (gp3, io2, st1, sc1). Snapshots. EFS modes. FSx for Windows/Lustre |
-| W21 | S3 Deep | Storage classes, lifecycle, versioning, replication (CRR/SRR), encryption, access points |
-| W22 | ELB & Auto Scaling | ALB (host/path routing) vs NLB (TCP/TLS) vs GWLB. ASG: launch templates, policies |
-| W23 | Database Services | RDS Multi-AZ, Read Replicas. Aurora Global/Serverless. ElastiCache (Redis vs Memcached) |
-| W24 | DynamoDB & Non-relational | Partitions, WCU/RCU, on-demand. GSI/LSI. Streams. DAX. Design patterns |
-| W25 | VPC Deep | Subnets, Route Tables, IGW, NAT GW, VPC Peering, Endpoints, PrivateLink, Flow Logs |
-| W26 | Route 53 & CloudFront | Hosted zones, routing policies, health checks. CloudFront: distributions, OAC, Lambda@Edge |
-| W27 | Serverless | Lambda (runtime, layers, concurrency). API Gateway. Step Functions. EventBridge |
-| W28 | Decoupling & Integration | SQS (Standard/FIFO), SNS, EventBridge patterns. Kinesis overview. Microservices patterns |
-| W29 | Security & Monitoring | KMS, Secrets Manager, ACM, WAF. CloudWatch, CloudTrail, Config, X-Ray |
-| W30 | HA & DR + Well-Architected | Multi-AZ vs Multi-Region. DR strategies (RPO/RTO). 6 Pillars deep review |
-| W31 | **EXAM PREP** | 4-5 full practice exams. Weak areas review. **🎯 THI SAA-C03** |
+| Tuần | Focus | 🧪 Lab chính (Cloud Journey) | Add-on |
+| --- | --- | --- | --- |
+| W18 | IAM Deep | [Access Management with IAM](https://000002.awsstudygroup.com/) (review deep) | Policy Simulator |
+| W18 |  | [Access Control with IAM Policies and Conditions](https://000044.awsstudygroup.com/) |  |
+| W19 | EC2 Deep | [Compute Essentials with EC2](https://000004.awsstudygroup.com/) (advanced) | Spot Instance lab |
+| W19 |  | [Cloud Development with AWS Cloud9](https://000049.awsstudygroup.com/) |  |
+| W20 | Storage: EBS, EFS, FSx | [Storage Performance Workshop](https://000068.awsstudygroup.com/) | EBS snapshot practice |
+| W21 | S3 Deep | [Static Website Hosting with S3](https://000057.awsstudygroup.com/) (deep) | S3 lifecycle config |
+| W21 |  | [S3 Security Best Practices](https://000069.awsstudygroup.com/) |  |
+| W22 | ELB & Auto Scaling | [Scaling Applications with EC2 Auto Scaling](https://000006.awsstudygroup.com/) | Target tracking policy |
+| W22 |  | [Monitoring with CloudWatch](https://000008.awsstudygroup.com/) (deep) |  |
+| W23 | Database Services | [Database Essentials with RDS](https://000005.awsstudygroup.com/) (Multi-AZ) | Aurora Serverless |
+| W23 |  | [Advanced PostgreSQL on AWS - Part 1](https://000115.awsstudygroup.com/) |  |
+| W24 | DynamoDB & NoSQL | [NoSQL Database Essentials with DynamoDB](https://000060.awsstudygroup.com/) | GSI/LSI design |
+| W24 |  | [In-Memory Caching with ElastiCache](https://000061.awsstudygroup.com/) |  |
+| W24 |  | [Building Advanced Applications with DynamoDB](https://000039.awsstudygroup.com/) |  |
+| W25 | VPC Deep | [Networking Essentials with VPC](https://000003.awsstudygroup.com/) (advanced) | VPC Endpoints lab |
+| W25 |  | [Networking on AWS Workshop](https://000092.awsstudygroup.com/) |  |
+| W25 |  | [Private Access to S3 with VPC Endpoints](https://000111.awsstudygroup.com/) |  |
+| W26 | Route 53 & CloudFront | [Hybrid DNS Management with Route 53](https://000010.awsstudygroup.com/) (deep) | Failover routing |
+| W26 |  | [Content Delivery with CloudFront](https://000094.awsstudygroup.com/) |  |
+| W26 |  | [Edge Computing with CloudFront and Lambda@Edge](https://000130.awsstudygroup.com/) |  |
+| W27 | Serverless | [Serverless Automation with Lambda](https://000022.awsstudygroup.com/) | API GW REST vs HTTP |
+| W27 |  | [Workflow Orchestration with Step Functions](https://000047.awsstudygroup.com/) |  |
+| W28 | Decoupling & Integration | [Messaging Systems with SQS and SNS](https://000077.awsstudygroup.com/) | EventBridge patterns |
+| W28 |  | [Event-Driven Architecture](https://000054.awsstudygroup.com/) |  |
+| W29 | Security & Monitoring | [Encryption with AWS KMS](https://000033.awsstudygroup.com/) | X-Ray tracing |
+| W29 |  | [Credentials Management with Secrets Manager](https://000096.awsstudygroup.com/) |  |
+| W29 |  | [Application Protection with AWS WAF](https://000026.awsstudygroup.com/) |  |
+| W30 | HA & DR | [Disaster Recovery with AWS Elastic DR](https://000100.awsstudygroup.com/) | Multi-Region design |
+| W30 |  | [Data Protection with AWS Backup](https://000013.awsstudygroup.com/) |  |
+| W31 | **EXAM PREP** | [Building Highly Available Web Applications](https://000101.awsstudygroup.com/) ← review | 4-5 full practice exams. **🎯 THI SAA-C03** |
 
 ---
 
 ## 🗓️ PHASE 2B: SYSOPS ASSOCIATE (Tuần 32-43) — 12 tuần
 
-| Tuần | Focus | Tài liệu |
-| --- | --- | --- |
-| W32-33 | CloudWatch Deep | Metrics, custom metrics, dashboards, Logs Insights, alarms, composite alarms, EventBridge |
-| W34-35 | Systems Manager | SSM Agent, Session Manager, Run Command, Parameter Store, Patch Manager, Automation |
-| W36-37 | Deployment & IaC | CloudFormation deep (stacks, nested, changesets, drift). Elastic Beanstalk. OpsWorks |
-| W38-39 | Networking Operations | VPC troubleshooting, Reachability Analyzer, Traffic Mirroring. SG/NACL audit |
-| W40-41 | Cost & Performance | Cost Explorer, Budgets, Savings Plans. Compute Optimizer, Trusted Advisor. Tagging strategy |
-| W42 | Account & Compliance | AWS Config rules, conformance packs. Organizations, SSO. Backup strategies |
-| W43 | **EXAM PREP** | SOA.pdf dump (133 pages) + Tutorials Dojo. **🎯 THI SOA-C02** |
+| Tuần | Focus | 🧪 Lab chính (Cloud Journey) | Add-on |
+| --- | --- | --- | --- |
+| W32-33 | CloudWatch Deep | [Advanced Monitoring with CloudWatch and Grafana](https://000029.awsstudygroup.com/) | Custom metrics |
+|  |  | [CloudWatch Advanced Workshop](https://000036.awsstudygroup.com/) |  |
+| W34-35 | Systems Manager | [Systems Management with AWS Systems Manager](https://000031.awsstudygroup.com/) | Patch Manager |
+|  |  | [Remote Server Access with Session Manager](https://000058.awsstudygroup.com/) |  |
+| W36-37 | Deployment & IaC | [Infrastructure as Code with CloudFormation](https://000037.awsstudygroup.com/) | Nested stacks |
+|  |  | [Cloud Development Kit (CDK) Essentials](https://000038.awsstudygroup.com/) |  |
+|  |  | [AWS CDK Advanced](https://000076.awsstudygroup.com/) |  |
+|  |  | [Infrastructure as Code Workshop Series](https://000102.awsstudygroup.com/) |  |
+| W38-39 | Networking Operations | [Network Monitoring with VPC Flow Logs](https://000074.awsstudygroup.com/) | Reachability Analyzer |
+|  |  | [Network Integration with VPC Peering](https://000019.awsstudygroup.com/) |  |
+| W40-41 | Cost & Performance | [Right-Sizing with EC2 Resource Optimization](https://000032.awsstudygroup.com/) | Trusted Advisor |
+|  |  | [Billing Console Delegation](https://000075.awsstudygroup.com/) |  |
+|  |  | [Managing Quotas with Service Quotas](https://000063.awsstudygroup.com/) |  |
+|  |  | [Cost and Usage Management](https://000064.awsstudygroup.com/) |  |
+|  |  | [Cost Savings with Savings Plans and RI](https://000042.awsstudygroup.com/) |  |
+|  |  | [Cost Visualization and Analytics](https://000034.awsstudygroup.com/) |  |
+| W42 | Account, Backup & Compliance | [Resource Organization with Tags and Resource Groups](https://000027.awsstudygroup.com/) | AWS Config rules |
+|  |  | [Access Control with IAM and Resource Tags](https://000028.awsstudygroup.com/) |  |
+|  |  | [Snapshot Automation with EBS Data Lifecycle Manager](https://000088.awsstudygroup.com/) |  |
+|  |  | [Anomaly Detection for EBS Backups](https://000089.awsstudygroup.com/) |  |
+| W43 | **EXAM PREP** | [Serverless Automation with Lambda](https://000022.awsstudygroup.com/) ← automation review | SOA.pdf dump + Tutorials Dojo. **🎯 THI SOA-C02** |
 
 ---
 
-## 🗓️ PHASE 3: SA PROFESSIONAL (Tuần 44-62) — 19 tuần (dãn thêm vì complex)
+## 🗓️ PHASE 3: SA PROFESSIONAL (Tuần 44-62) — 19 tuần
 
-| Tuần | Focus | Notes |
-| --- | --- | --- |
-| W44-46 | Multi-Account Strategy | Organizations (SCPs, OUs), Control Tower, cross-account roles, RAM, delegated admin |
-| W47-50 | Advanced Networking | Transit Gateway (deep), Direct Connect (dedicated/hosted, VIFs, LAG), VPN, hybrid DNS, PrivateLink at scale |
-| W51-53 | Migration & Modernization | 6Rs, AWS MGN, DMS/SCT, DataSync, Transfer Family, Snow Family, large-scale migration planning |
-| W54-56 | Advanced Architecture | Event-driven, CQRS, saga, multi-region active-active, disaster recovery at enterprise scale |
-| W57-59 | Cost Governance & Operational Excellence | RI/SP optimization, Spot fleet, Security Hub multi-account, compliance at scale |
-| W60-61 | Review & Weak Areas | Re-study weak domains. Read AWS whitepapers: Migration, Well-Architected, Security |
-| W62 | **EXAM PREP** | SAP.pdf (196 pages) + SAP Q&A PDFs. **🎯 THI SAP-C02** |
+| Tuần | Focus | 🧪 Lab chính (Cloud Journey) | Add-on |
+| --- | --- | --- | --- |
+| W44-46 | Multi-Account Strategy | [Identity Federation with AWS SSO](https://000012.awsstudygroup.com/) | Control Tower |
+|  |  | [Permission Management with IAM Permission Boundaries](https://000030.awsstudygroup.com/) |  |
+| W47-50 | Advanced Networking | [Centralized Network Management with Transit Gateway](https://000020.awsstudygroup.com/) | Direct Connect theory |
+|  |  | [Network Integration with VPC Peering](https://000019.awsstudygroup.com/) |  |
+|  |  | [Networking on AWS Workshop](https://000092.awsstudygroup.com/) (review) |  |
+| W51-53 | Migration & Modernization | [VM Migration with AWS VM Import/Export](https://000014.awsstudygroup.com/) | Snow Family theory |
+|  |  | [Database Migration with DMS and SCT](https://000043.awsstudygroup.com/) |  |
+|  |  | [Monolith to Microservices Migration](https://000050.awsstudygroup.com/) |  |
+| W54-56 | Advanced Architecture | [Event-Driven Architecture](https://000054.awsstudygroup.com/) | Multi-region active-active |
+|  |  | [Messaging Systems with SQS and SNS](https://000077.awsstudygroup.com/) |  |
+|  |  | [Workflow Orchestration with Step Functions](https://000047.awsstudygroup.com/) |  |
+|  |  | [Building Highly Available Web Applications](https://000101.awsstudygroup.com/) |  |
+| W57-59 | Cost & Security at Scale | [Security Compliance with Security Hub](https://000018.awsstudygroup.com/) | Whitepapers |
+|  |  | [Security Governance with Firewall Manager](https://000097.awsstudygroup.com/) |  |
+|  |  | [Cost Data Analysis with Glue and Athena](https://000040.awsstudygroup.com/) |  |
+| W60-61 | Review & Weak Areas | Redo bất kỳ lab nào chưa vững | Re-read whitepapers |
+| W62 | **EXAM PREP** | — | SAP.pdf (196 pages) + Q&A PDFs. **🎯 THI SAP-C02** |
 
 ---
 
@@ -362,44 +422,77 @@ categories: Sysadmin
 
 ### Option A: Security Specialty (Tuần 63-75)
 
-| Tuần | Focus |
-| --- | --- |
-| W63-65 | IAM Advanced + Identity Federation (SAML, OIDC, Cognito, IAM Identity Center) |
-| W66-68 | Data Protection: KMS deep, CloudHSM, S3 encryption patterns, secrets management |
-| W69-71 | Infrastructure Security: Network Firewall, WAF advanced, Shield Advanced, VPC security |
-| W72-73 | Detection & Response: GuardDuty, SecurityHub, Detective, automated remediation |
-| W74-75 | **EXAM PREP:** SCS.pdf (158 pages). **🎯 THI SCS-C02** |
+| Tuần | Focus | 🧪 Lab chính (Cloud Journey) |
+| --- | --- | --- |
+| W63-65 | IAM & Identity Federation | [Identity Federation with AWS SSO](https://000012.awsstudygroup.com/) |
+|  |  | [Permission Management with IAM Permission Boundaries](https://000030.awsstudygroup.com/) |
+|  |  | [Access Control with IAM Policies and Conditions](https://000044.awsstudygroup.com/) |
+|  |  | [Cross-Domain Authentication with Cognito](https://000141.awsstudygroup.com/) |
+| W66-68 | Data Protection | [Encryption with AWS KMS](https://000033.awsstudygroup.com/) |
+|  |  | [Data Protection with Amazon Macie](https://000090.awsstudygroup.com/) |
+|  |  | [Credentials Management with Secrets Manager](https://000096.awsstudygroup.com/) |
+|  |  | [S3 Security Best Practices](https://000069.awsstudygroup.com/) |
+| W69-71 | Infrastructure Security | [Application Protection with AWS WAF](https://000026.awsstudygroup.com/) |
+|  |  | [Private Access to S3 with VPC Endpoints](https://000111.awsstudygroup.com/) |
+|  |  | [Security Governance with Firewall Manager](https://000097.awsstudygroup.com/) |
+|  |  | [Systems Patching with EC2 Image Builder](https://000099.awsstudygroup.com/) |
+| W72-73 | Detection & Response | [Threat Detection with GuardDuty](https://000098.awsstudygroup.com/) |
+|  |  | [Security Compliance with Security Hub](https://000018.awsstudygroup.com/) |
+| W74-75 | **EXAM PREP** | SCS.pdf (158 pages). **🎯 THI SCS-C02** |
 
 ### Option B: Advanced Networking (Tuần 63-77)
 
-| Tuần | Focus |
-| --- | --- |
-| W63-66 | Transit Gateway deep: route tables, attachments, multicast, inter-region peering |
-| W67-70 | Direct Connect deep: connections, all VIF types, LAG, resiliency designs |
-| W71-73 | Hybrid DNS + CloudFront advanced + Global Accelerator + Network Firewall |
-| W74-76 | VPC Lattice, load balancing edge cases, IPv6, complex routing scenarios |
-| W77 | **EXAM PREP:** ANS.pdf (162 pages). **🎯 THI ANS-C01** |
+| Tuần | Focus | 🧪 Lab chính (Cloud Journey) |
+| --- | --- | --- |
+| W63-66 | Transit Gateway deep | [Centralized Network Management with Transit Gateway](https://000020.awsstudygroup.com/) |
+|  |  | [Networking on AWS Workshop](https://000092.awsstudygroup.com/) |
+| W67-70 | Hybrid & Connectivity | [Network Integration with VPC Peering](https://000019.awsstudygroup.com/) |
+|  |  | [Network Monitoring with VPC Flow Logs](https://000074.awsstudygroup.com/) |
+| W71-73 | DNS, CDN, Security | [Hybrid DNS Management with Route 53](https://000010.awsstudygroup.com/) |
+|  |  | [Content Delivery with CloudFront](https://000094.awsstudygroup.com/) |
+|  |  | [Application Protection with AWS WAF](https://000026.awsstudygroup.com/) |
+| W74-76 | Advanced scenarios | [Private Access to S3 with VPC Endpoints](https://000111.awsstudygroup.com/) |
+| W77 | **EXAM PREP** | ANS.pdf (162 pages). **🎯 THI ANS-C01** |
 
 ### Option C: Data Engineer (Tuần 63-75)
 
-| Tuần | Focus |
-| --- | --- |
-| W63-65 | S3 data lake: partitioning strategies, file formats (Parquet/ORC/Avro), lifecycle |
-| W66-68 | Glue deep: ETL jobs (PySpark), crawlers, schema registry, Data Quality, bookmarks |
-| W69-71 | Kinesis + MSK streaming. Redshift deep: distribution styles, sort keys, Spectrum, ML |
-| W72-73 | Lake Formation, Athena optimization, MWAA/Step Functions orchestration |
-| W74-75 | **EXAM PREP:** DEA.pdf (141 pages). **🎯 THI DEA-C01** |
+| Tuần | Focus | 🧪 Lab chính (Cloud Journey) |
+| --- | --- | --- |
+| W63-65 | S3 Data Lake | [Data Lake Fundamentals](https://000035.awsstudygroup.com/) |
+|  |  | [Building a Data Lake with Your Own Data](https://000070.awsstudygroup.com/) |
+| W66-68 | Glue, ETL & Analytics | [Data Engineering Immersion Day](https://000105.awsstudygroup.com/) |
+|  |  | [Serverless Analytics with Amazon Athena](https://000106.awsstudygroup.com/) |
+|  |  | [Cost Data Analysis with AWS Glue and Athena](https://000040.awsstudygroup.com/) |
+| W69-71 | Streaming & Visualization | [Data Analytics Services Overview](https://000072.awsstudygroup.com/) |
+|  |  | [Business Intelligence with QuickSight](https://000073.awsstudygroup.com/) |
+|  |  | [Advanced PostgreSQL on AWS - Part 1](https://000115.awsstudygroup.com/) |
+|  |  | [Advanced PostgreSQL on AWS - Part 2](https://000116.awsstudygroup.com/) |
+| W72-73 | Orchestration | [Workflow Orchestration with Step Functions](https://000047.awsstudygroup.com/) |
+| W74-75 | **EXAM PREP** | DEA.pdf (141 pages). **🎯 THI DEA-C01** |
 
 ### Option D: ML/AI Track (Tuần 63-82)
 
-| Tuần | Focus |
-| --- | --- |
-| W63-66 | ML Fundamentals: Statistics, Linear Algebra, ML algorithms, bias-variance, evaluation |
-| W67-70 | SageMaker: training, endpoints, pipelines, feature store, experiments, debugger |
-| W71-73 | AIF-C01: Bedrock, GenAI, responsible AI, prompt engineering. **🎯 THI AIF-C01** |
-| W74-78 | MLA-C01: MLOps, CI/CD for ML, model monitoring, A/B testing, canary deployment |
-| W79-80 | **EXAM PREP:** MLA.docx + MLA.pdf. **🎯 THI MLA-C01** |
-| W81-82 | MLS-C01: advanced algorithms, NLP, CV, deep learning on AWS. **🎯 THI MLS-C01** |
+| Tuần | Focus | 🧪 Lab chính (Cloud Journey) |
+| --- | --- | --- |
+| W63-66 | ML Fundamentals | [Machine Learning with SageMaker](https://000200.awsstudygroup.com/) |
+| W67-70 | SageMaker Deep | [Machine Learning with SageMaker](https://000200.awsstudygroup.com/) (advanced) |
+| W71-73 | AIF-C01 Prep | [AWS AI Services Integration](https://000056.awsstudygroup.com/) |
+| W74-80 | MLA-C01 & MLS-C01 | MLA.docx + MLA.pdf + MLS.pdf dumps. **🎯 THI AIF → MLA → MLS** |
+
+---
+
+### 🚀 BONUS: APPLICATION MODERNIZATION WORKSHOP SERIES
+
+> Làm khi hoàn thành Phase 2A trở đi. Đây là full workshop series, mỗi series gồm 5-9 bài liên tiếp.
+
+| Series | Labs (theo thứ tự) | Khi nào làm |
+| --- | --- | --- |
+| **Serverless - Book Store** | [1. Backend](https://000078.awsstudygroup.com/) → [2. Frontend](https://000079.awsstudygroup.com/) → [3. SAM](https://000080.awsstudygroup.com/) → [4. Cognito](https://000081.awsstudygroup.com/) → [5. Custom Domain](https://000082.awsstudygroup.com/) → [6. SQS/SNS](https://000083.awsstudygroup.com/) → [7. CI/CD](https://000084.awsstudygroup.com/) → [8. Monitoring](https://000085.awsstudygroup.com/) → [9. AppSync](https://000086.awsstudygroup.com/) | Sau W27 (Serverless) |
+| **Serverless - DevAx** | [1. Monolith→Micro](https://000050.awsstudygroup.com/) → [2. CI/CD](https://000051.awsstudygroup.com/) → [3. Microservices](https://000052.awsstudygroup.com/) → [4. Data Restructuring](https://000053.awsstudygroup.com/) → [5. Event-Driven](https://000054.awsstudygroup.com/) → [6. SPA Auth](https://000055.awsstudygroup.com/) → [7. AI Services](https://000056.awsstudygroup.com/) | Sau W43 (Phase 2B) |
+| **ECS Workshop** | [1. ECS + Fargate](https://000067.awsstudygroup.com/) → [2. IaC for ECS](https://000118.awsstudygroup.com/) → [3. CI/CD for ECS](https://000152.awsstudygroup.com/) | Sau W22 |
+| **EKS Workshop** | [1. EKS basics](https://000126.awsstudygroup.com/) → [2. EKS Blueprints](https://000065.awsstudygroup.com/) → [3. CI/CD for EKS](https://000062.awsstudygroup.com/) | Sau Phase 2B |
+| **Docker + CI/CD** | [1. Docker](https://000015.awsstudygroup.com/) → [2. ECS](https://000016.awsstudygroup.com/) → [3. CodePipeline](https://000017.awsstudygroup.com/) → [4. Auto Deploy](https://000023.awsstudygroup.com/) | Sau W9 (Containers) |
+| **WordPress on AWS** | [1. Architecture](https://000021.awsstudygroup.com/) → [2. EC2 Deploy](https://000091.awsstudygroup.com/) | Anytime after Phase 1 |
 
 ---
 
@@ -412,7 +505,7 @@ categories: Sysadmin
 │  🧠 20 phút — Review hôm trước (flashcards/notes)   │
 │  📖 50 phút — Kiến thức mới (video hoặc docs)       │
 │  ☕ 10 phút — Nghỉ ngắn (quan trọng!)               │
-│  🛠️ 40 phút — Hands-on thực hành                    │
+│  🧪 40 phút — Lab Cloud Journey hoặc hands-on       │
 │  📝 10 phút — Ghi chú, tạo flashcard                │
 │  ─────────────────────────────────────────           │
 │  Total: ~2h 10 phút                                  │
@@ -488,8 +581,9 @@ categories: Sysadmin
 ```
 Tuần 1-5 (Networking): ĐI CHẬM, vẽ nhiều diagram, dùng Wireshark
 Tuần 6-8 (Linux): Nhanh hơn — bạn đã quen terminal
-Tuần 9-10 (Containers/DB): Fastest — gần với coding world
-Tuần 11-12 (Security): Moderate — cần connect với networking knowledge
+Tuần 9-10 (Containers/DB): Fastest — gần với coding world + Cloud Journey labs
+Tuần 11-12 (Security): Moderate — connect với networking knowledge
+Phase 1+ : MỖI TUẦN phải hoàn thành ít nhất 2-3 labs Cloud Journey
 
 ```
 
@@ -499,28 +593,27 @@ Tuần 11-12 (Security): Moderate — cần connect với networking knowledge
 
 | Category | Resource | Link | Ghi chú |
 | --- | --- | --- | --- |
-| Networking | Subnetting Practice | subnettingpractice.com | Daily practice |
+| **🧪 Labs chính** | **Cloud Journey - AWS Study Group** | [cloudjourney.awsstudygroup.com](https://cloudjourney.awsstudygroup.com/) | **BÀI THỰC HÀNH CHÍNH — dùng xuyên suốt** |
+| Networking | Subnetting Practice | subnettingpractice.com | Daily practice (Phase 0) |
 | Networking | Professor Messer Network+ | youtube.com/professormesser | Free, structured |
 | Networking | NetworkChuck | youtube.com/networkchuck | Fun, visual |
 | Linux | Linux Journey | linuxjourney.com | Interactive |
 | Linux | OverTheWire Bandit | overthewire.org/wargames/bandit | Gamified CLI |
 | Containers | Docker Getting Started | docs.docker.com/get-started | Official |
 | Security | TryHackMe | tryhackme.com | Interactive, beginner |
-| Python/AWS | Boto3 Docs | boto3.amazonaws.com | Reference |
-| AWS | Skill Builder | skillbuilder.aws | Free courses |
-| AWS | Well-Architected Labs | wellarchitectedlabs.com | Hands-on |
-| AWS | AWS Workshops | workshops.aws | Official labs |
-| Practice | Tutorials Dojo | tutorialsdojo.com | Best practice exams |
+| AWS | Skill Builder | skillbuilder.aws | Free courses (add-on) |
+| AWS | Well-Architected Labs | wellarchitectedlabs.com | Hands-on (add-on) |
+| AWS | AWS Workshops | workshops.aws | Official labs (add-on) |
+| Practice Exams | Tutorials Dojo | tutorialsdojo.com | Best practice exams |
 | Course | Stephane Maarek | udemy.com | Best overall |
 | Course | Adrian Cantrill | learn.cantrill.io | Most technical |
 
 ---
 
-> 📌 **Tổng kết thay đổi so với bản trước:**
-> 1. **IT Foundation: 8 tuần → 12 tuần** (thêm 4 tuần buffer)
-> 2. **Networking: 3 tuần → 5 tuần** (nhiều thời gian "ngấm" nhất)
-> 3. **Security: từ tuần 6 → tuần 11-12** (để cuối, cần foundation khác trước)
-> 4. **Thêm ngày nghỉ/buffer** trong mỗi tuần (5-6 ngày thay vì 6-7)
-> 5. **Thêm "Developer advantages" section** — tận dụng background coding
-> 6. **Tổng lộ trình: 18 tháng → 20-22 tháng** (realistic hơn)
+> 📌 **Nguyên tắc sử dụng tài liệu:**
+> - **🧪 Labs CHÍNH** = Cloud Journey (awsstudygroup.com) — làm bắt buộc, có link cụ thể trong bảng mỗi tuần
+> - **Add-on** = Các bài tập thêm trong cột Add-on + AWS Skill Builder + Workshops
+> - **Phase 0 (IT Foundation)** = Tự thực hành trên local machine (Wireshark, Linux VM, Docker) — chưa cần AWS account nhiều
+> - **Phase 1+** = Mỗi tuần phải hoàn thành **tất cả labs** trong cột "🧪 Lab chính" trước khi làm add-on
+> - **Practice Exams** = Tutorials Dojo + PDF dumps (chỉ dùng ở tuần cuối mỗi cert)
 
