@@ -6,7 +6,7 @@ gh-repo: wayarmy/wayarmy.github.io
 tags: [networking, aws, learning-path]
 comments: true
 date: 2026-06-01
-categories: AWS-Learning-Path
+categories: [networking]
 ---
 
 > Bài viết thuộc series **AWS Learning Path — IT Foundation** (Tuần 3).

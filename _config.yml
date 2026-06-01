@@ -14,8 +14,13 @@ author: Wayarmy
 
 navbar-links:
   About Me: "aboutme"
-  # Resources:
-  #   - Head of System Platform: "https://onemount.com"
+  Topics:
+    - Networking: "categories/networking"
+    - Linux: "categories/linux"
+    - Containers: "categories/containers"
+    - Database: "categories/database"
+    - Security: "categories/security"
+  Tags: "tags"
   Author's home: "https://wayarmy.github.io"
 
 # --- Logo --- #

@@ -6,7 +6,7 @@ gh-repo: wayarmy/wayarmy.github.io
 tags: [databases, aws, learning-path]
 comments: true
 date: 2026-06-01
-categories: AWS-Learning-Path
+categories: [database]
 ---
 
 > Bài viết thuộc series **AWS Learning Path — IT Foundation** (Phần 11).

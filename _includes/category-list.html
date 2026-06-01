@@ -1,0 +1,23 @@
+{% comment %}
+Renders a chronological list of posts for a given category.
+Usage: set page.category to the category name (e.g. "networking").
+{% endcomment %}
+
+{% assign date_format = site.date_format | default: "%B %-d, %Y" %}
+{% assign cat_posts = site.categories[page.category] | sort: "date" %}
+
+{% if cat_posts and cat_posts.size > 0 %}
+<p class="category-count">{{ cat_posts.size }} bài viết</p>
+<div class="post-list">
+  {% for post in cat_posts %}
+  <div class="tag-entry">
+    <a href="{{ post.url | relative_url }}">{{ post.title | strip_html }}</a>
+    <div class="entry-date">
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: date_format }}</time>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>Chưa có bài viết nào trong chủ đề này.</p>
+{% endif %}

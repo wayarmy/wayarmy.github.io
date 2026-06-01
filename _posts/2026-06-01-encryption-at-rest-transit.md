@@ -1,0 +1,318 @@
+---
+layout: post
+title: "Encryption at Rest & in Transit - Mã hóa dữ liệu"
+date: 2026-06-01
+categories: [security]
+tags: [encryption, kms, envelope-encryption, key-rotation]
+---
+
+## Mục lục
+1. [Góc nhìn tổng quan - Két sắt kỹ thuật số](#overview)
+2. [Symmetric vs Asymmetric Encryption](#sym-asym)
+3. [Envelope Encryption - Mã hóa phong bì](#envelope)
+4. [AWS KMS - Key Management Service](#kms)
+5. [Key Rotation](#key-rotation)
+6. [Client-side vs Server-side Encryption](#client-server)
+7. [EBS Encryption](#ebs)
+8. [RDS Encryption](#rds)
+9. [S3 Encryption Options](#s3)
+10. [Tổng kết](#tong-ket)
+
+---
+
+## 1. Góc nhìn tổng quan {#overview}
+
+### Ví dụ đời thường
+- **Encryption at rest** = khóa két sắt (data trên disk được mã hóa)
+- **Encryption in transit** = xe bọc thép chở tiền (data di chuyển qua network được mã hóa)
+- **Envelope encryption** = khóa trong khóa (data key trong master key trong HSM)
+- **KMS** = ngân hàng quản lý chìa khóa (bạn không giữ master key, bank giữ)
+- **Key rotation** = đổi ổ khóa định kỳ (key cũ vẫn mở được két cũ, key mới cho két mới)
+
+---
+
+## 2. Symmetric vs Asymmetric {#sym-asym}
+
+```
+Symmetric (AES-256):
+- Same key encrypts and decrypts
+- Fast (hardware accelerated: AES-NI)
+- Used for: data encryption (at rest)
+- Challenge: How to share the key securely?
+
+Asymmetric (RSA, ECC):
+- Public key encrypts, Private key decrypts
+- Slow (1000x slower than symmetric)
+- Used for: key exchange, digital signatures
+- TLS uses asymmetric to exchange symmetric key!
+
+In practice: BOTH are used together
+- Asymmetric to exchange/protect symmetric keys
+- Symmetric to encrypt actual data
+→ This is "envelope encryption"
+```
+
+---
+
+## 3. Envelope Encryption {#envelope}
+
+```
+Problem: Encrypting 1TB with KMS directly = impossible
+(KMS can only encrypt/decrypt up to 4KB)
+
+Solution: Envelope Encryption
+
+┌─────────────────────────────────────────────┐
+│ 1. Generate Data Key (plaintext + encrypted)│
+│    KMS.GenerateDataKey() →                  │
+│    { Plaintext: "abc...", Encrypted: "xyz..."} │
+│                                              │
+│ 2. Use plaintext Data Key to encrypt data   │
+│    AES-256(data, plaintext_key) → ciphertext│
+│                                              │
+│ 3. Store encrypted Data Key WITH ciphertext │
+│    { ciphertext + encrypted_key }           │
+│                                              │
+│ 4. DISCARD plaintext Data Key from memory!  │
+│                                              │
+│ To decrypt:                                  │
+│ 1. Send encrypted Data Key to KMS           │
+│    KMS.Decrypt(encrypted_key) → plaintext   │
+│ 2. Use plaintext key to decrypt data        │
+│ 3. Discard plaintext key                    │
+└─────────────────────────────────────────────┘
+
+Benefits:
+- Large data encrypted locally (fast, no network)
+- Only tiny Data Key goes to KMS
+- Master Key never leaves KMS/HSM
+- Rotate master key without re-encrypting all data
+```
+
+---
+
+## 4-10. KMS, Rotation, EBS/RDS/S3 Encryption {#kms}
+
+### AWS KMS Key Types
+```
+AWS Managed Keys (aws/s3, aws/ebs):
+- Free, automatic rotation yearly
+- Cannot manage/delete
+- Shared across accounts using service
+
+Customer Managed Keys (CMK):
+- You create and manage
+- Full control: rotation, policies, deletion
+- Cost: $1/month + API calls
+- Can be symmetric or asymmetric
+
+Custom Key Store:
+- Backed by CloudHSM (FIPS 140-2 Level 3)
+- Keys never leave HSM
+- Compliance requirements
+```
+
+### S3 Encryption Options
+```
+SSE-S3: Server-side, Amazon-managed keys (default)
+SSE-KMS: Server-side, KMS-managed keys (audit trail)
+SSE-C: Server-side, Customer-provided keys (you manage)
+CSE: Client-side encryption (encrypt before upload)
+
+Best practice: SSE-KMS with CMK for compliance
+(audit trail via CloudTrail, fine-grained access control)
+```
+
+
+
+## Additional Sections
+
+### Key Hierarchy in AWS
+
+```
+┌─────────────────────────────────────────────────────┐
+│                  AWS Key Hierarchy                    │
+│                                                      │
+│  ┌───────────────────────────────────────────────┐  │
+│  │  HSM (Hardware Security Module)                │  │
+│  │  ┌─────────────────────────────────┐          │  │
+│  │  │  AWS Master Key (never exported)│          │  │
+│  │  └────────────┬────────────────────┘          │  │
+│  └───────────────┼───────────────────────────────┘  │
+│                  │                                   │
+│  ┌───────────────▼───────────────────────────────┐  │
+│  │  Customer Master Key (CMK/KMS Key)             │  │
+│  │  - Created by you in KMS                       │  │
+│  │  - Policy controls who can use                 │  │
+│  │  - Can be rotated automatically                │  │
+│  └───────────────┬───────────────────────────────┘  │
+│                  │ GenerateDataKey()                  │
+│  ┌───────────────▼───────────────────────────────┐  │
+│  │  Data Encryption Key (DEK)                     │  │
+│  │  - Generated by KMS, used locally              │  │
+│  │  - Encrypts actual data (AES-256)              │  │
+│  │  - Stored encrypted alongside data             │  │
+│  │  - Plaintext discarded after use               │  │
+│  └───────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────┘
+```
+
+### KMS Operations
+
+```python
+import boto3
+
+kms = boto3.client('kms')
+
+# Generate data key for envelope encryption
+response = kms.generate_data_key(
+    KeyId='alias/my-app-key',
+    KeySpec='AES_256'
+)
+plaintext_key = response['Plaintext']      # Use to encrypt data
+encrypted_key = response['CiphertextBlob']  # Store with encrypted data
+
+# Encrypt data locally with plaintext key
+from cryptography.fernet import Fernet
+import base64
+
+fernet_key = base64.urlsafe_b64encode(plaintext_key[:32])
+cipher = Fernet(fernet_key)
+encrypted_data = cipher.encrypt(b"sensitive data here")
+
+# Store: encrypted_data + encrypted_key
+# Discard: plaintext_key (from memory!)
+
+# To decrypt later:
+decrypted_key = kms.decrypt(CiphertextBlob=encrypted_key)['Plaintext']
+fernet_key = base64.urlsafe_b64encode(decrypted_key[:32])
+cipher = Fernet(fernet_key)
+original_data = cipher.decrypt(encrypted_data)
+```
+
+### Key Rotation
+
+```
+Automatic Rotation (KMS):
+- CMK: Enable automatic rotation → new key material yearly
+- Old key material preserved (for decrypting old data)
+- Key ID/ARN doesn't change
+- Re-encryption NOT required!
+
+Manual Rotation:
+- Create new CMK → update application to use new key
+- Old CMK still available for decrypting old data
+- Eventually re-encrypt old data and delete old CMK
+
+EBS/RDS rotation:
+- EBS: Create encrypted snapshot → new volume with new key
+- RDS: Create encrypted Read Replica with new key → promote
+- S3: Bucket key rotation handled by AWS (SSE-S3)
+         or re-encrypt objects (SSE-KMS with new CMK)
+```
+
+### EBS Encryption Details
+
+```
+EBS Encryption:
+- Uses AES-256 encryption
+- Encryption at rest + in-transit (between instance and volume)
+- Minimal impact on latency (hardware accelerated)
+- Snapshots of encrypted volumes are encrypted
+- Copies across regions can use different CMK
+
+Enable by default for all new volumes:
+  aws ec2 enable-ebs-encryption-by-default --region us-east-1
+
+Create encrypted volume:
+  aws ec2 create-volume \
+    --availability-zone us-east-1a \
+    --size 100 \
+    --volume-type gp3 \
+    --encrypted \
+    --kms-key-id alias/my-ebs-key
+```
+
+### RDS Encryption
+
+```
+RDS Encryption:
+- Encrypts: storage, automated backups, snapshots, read replicas
+- Uses KMS (CMK or AWS-managed key)
+- Must be enabled at creation (cannot encrypt existing DB)
+- All Read Replicas use same encryption as source
+
+To encrypt existing unencrypted RDS:
+1. Create snapshot (unencrypted)
+2. Copy snapshot with encryption enabled
+3. Restore new instance from encrypted snapshot
+4. Update application connection string
+5. Delete old unencrypted instance
+```
+
+### S3 Encryption Comparison Table
+
+```
+┌──────────────┬────────────────────┬─────────────────┬──────────────────┐
+│              │ SSE-S3             │ SSE-KMS         │ SSE-C            │
+├──────────────┼────────────────────┼─────────────────┼──────────────────┤
+│ Key managed  │ AWS (automatic)    │ KMS (you choose)│ Customer (you    │
+│              │                    │                 │ provide per-req) │
+│ Audit trail  │ No                 │ CloudTrail      │ No (your logs)   │
+│ Key rotation │ Automatic          │ Auto or manual  │ You manage       │
+│ Cost         │ Free               │ $1/mo + API     │ Free             │
+│ Access ctrl  │ S3 policies only   │ Key policy +    │ Must have key    │
+│              │                    │ S3 policy       │ to read          │
+│ Header       │ x-amz-server-side │ x-amz-server-side│x-amz-server-side│
+│              │ -encryption:AES256 │ -encryption:    │ -encryption:     │
+│              │                    │ aws:kms         │ AES256           │
+└──────────────┴────────────────────┴─────────────────┴──────────────────┘
+
+Best practice: SSE-KMS with CMK
+- Audit trail (who accessed what, when)
+- Fine-grained access control (key policy)
+- Automatic key rotation
+- Compliance-friendly
+```
+
+### Encryption in Transit
+
+```
+Encrypt data moving between services:
+- TLS 1.2/1.3 for all API calls
+- VPN or Direct Connect for on-premises
+- VPC endpoints for AWS service access (private)
+
+AWS services with encryption in transit:
+- ALB/NLB: TLS termination
+- CloudFront: HTTPS to origin
+- RDS: SSL/TLS connections (rds-ca-2019)
+- ElastiCache: In-transit encryption
+- EBS: Encrypted between instance and volume (always)
+- S3: HTTPS endpoints (enforce via bucket policy)
+
+# S3 bucket policy enforcing encryption in transit:
+{
+  "Effect": "Deny",
+  "Principal": "*",
+  "Action": "s3:*",
+  "Resource": "arn:aws:s3:::my-bucket/*",
+  "Condition": {
+    "Bool": { "aws:SecureTransport": "false" }
+  }
+}
+```
+
+### Tài liệu tham khảo
+
+| Tài liệu | Mô tả |
+|-----------|--------|
+| AWS KMS Developer Guide | Official KMS documentation |
+| AWS Encryption SDK | Client-side encryption library |
+| NIST SP 800-57 | Key Management Recommendations |
+| AWS Crypto Tools GitHub | Open source encryption tools |
+| Well-Architected Security Pillar | AWS security best practices |
+
+---
+
+*Bài viết tiếp theo: [Web Security - OWASP Top 10](/2026/09/03/web-security-owasp/)*

@@ -6,7 +6,7 @@ gh-repo: wayarmy/wayarmy.github.io
 tags: [containers, aws, learning-path]
 comments: true
 date: 2026-06-01
-categories: AWS-Learning-Path
+categories: [containers]
 ---
 
 > Bài viết thuộc series **AWS Learning Path — IT Foundation** (Phần 10).
