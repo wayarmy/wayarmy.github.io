@@ -5,7 +5,7 @@ subtitle: "Bạn chưa biết VPC, Subnet, Internet Gateway là gì? Bài này s
 gh-repo: wayarmy/wayarmy.github.io
 tags: [aws, vpc, networking, tutorial, learning-path, beginner]
 comments: true
-date: 2026-06-01
+date: 2026-06-03
 categories: [networking]
 ---
 
