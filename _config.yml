@@ -14,6 +14,7 @@ author: Wayarmy
 
 navbar-links:
   About Me: "aboutme"
+  AWS Learning Path: "2026-05-31-aws-learning-path"
   Topics:
     - Networking: "categories/networking"
     - Linux: "categories/linux"
